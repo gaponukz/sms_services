@@ -38,16 +38,9 @@ class Service(object):
         return float(response.text.split(':')[-1])
     
     def get_numbers_status(self) -> dict:
-        phone_numbers_data = {}
-
-        for country in range(181):
-            try:
-                response = requests.get(f"{self.service_api_url}?api_key={self.token}&action=getNumbersStatus&country={country}")
-                phone_numbers_data[str(country)] = int(response.json()['tg_0'])
-            except:
-                pass
+        response = requests.get(f"{self.service_api_url}?api_key={self.token}&action=getTopCountriesByService&service={self.service}")
         
-        return phone_numbers_data
+        return response.json()
     
     def get_price(self) -> float:
         return 0.5
